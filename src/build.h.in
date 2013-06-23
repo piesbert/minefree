@@ -1,0 +1,30 @@
+/* MineFree: build.h.in
+ * Copyright (C) 2012-2013 Sebastian Szymak
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License, version 3,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#if !defined(LOCK_MINEFREE_BUILD_H)
+#define LOCK_MINEFREE_BUILD_H
+
+#define MINEFREE "MineFree"
+
+//const char* const PLUGINS_CFG_PATH = "";
+const char* const PLUGINS_CFG_PATH = "@Config_Path@plugins.cfg";
+
+const char* const OGRE_CFG_PATH = "";
+//const char* const OGRE_CFG_PATH = "@Config_Path@ogre.cfg";
+
+const char* const OGRE_LOG_PATH = "ogre.log";
+
+#endif //LOCK_MINEFREE_BUILD_H
