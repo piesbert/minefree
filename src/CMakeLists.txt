@@ -1,12 +1,6 @@
 set(SOURCE_FILES
                 main.cpp
                 config.cpp
-                sdlhandler.cpp
-                gameloop.cpp
-                input.cpp
-                ogrehandler.cpp
-                scene.cpp
-                fpscamera.cpp
                 inputmanager.cpp
                 inputevent.cpp
                 actionmanager.cpp

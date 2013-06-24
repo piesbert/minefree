@@ -15,7 +15,6 @@
  */
 
 #include "actionmanager.h"
-#include "log.h"
 
 ActionManager::ActionManager() {
         prepareDefaults();
@@ -30,12 +29,22 @@ ActionManager& ActionManager::getInstance() {
 }
 
 void ActionManager::prepareDefaults() {
+        /* Quit event.
+         */
         events[QUIT].setType(InputEvent::KEYBOARD);
         events[QUIT].setKey(OIS::KC_ESCAPE);
+
+        /* Menu events.
+         */
+        events[MENU_UP].setType(InputEvent::KEYBOARD);
+        events[MENU_UP].setKey(OIS::KC_UP);
+        events[MENU_DOWN].setType(InputEvent::KEYBOARD);
+        events[MENU_DOWN].setKey(OIS::KC_DOWN);
+        events[MENU_SELECT].setType(InputEvent::KEYBOARD);
+        events[MENU_SELECT].setKey(OIS::KC_RETURN);
 }
 
 bool ActionManager::addListener(ActionManager::ActionID id, const Callback callback, const std::string &name) {
-        LOGINF("ADDED");
         return events[id].add(callback, name);
 }
 
@@ -44,7 +53,6 @@ void ActionManager::removeListener(ActionManager::ActionID id, const std::string
 }
 
 void ActionManager::broadcast(const OIS::KeyEvent &event, bool value) {
-        LOGINF("BROADCAST " << event.key);
         for (int i = 0; i < (int)ActionManager::MAX; i++) {
                 if (events[i].match(event)) {
                         events[i].run(value);

@@ -27,6 +27,9 @@ class ActionManager {
         public:
                 enum ActionID {
                         QUIT = 0,
+                        MENU_UP,
+                        MENU_DOWN,
+                        MENU_SELECT,
                         MOVE_UP,
                         MOVE_DOWN,
                         MOVE_LEFT,
