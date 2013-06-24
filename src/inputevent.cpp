@@ -15,6 +15,7 @@
  */
 
 #include "inputevent.h"
+#include "log.h"
 
 InputEvent::InputEvent()
 : m_type(InputEvent::NONE), m_key(0) {
@@ -37,6 +38,8 @@ bool InputEvent::setKey(OIS::MouseButtonID id) {
 
 bool InputEvent::match(const OIS::KeyEvent &event) const {
         bool retval = false;
+
+        LOGINF(m_type << ".." << m_key << ".." << event.key);
 
         if ((KEYBOARD == m_type) && (event.key == m_key)) {
                 retval = true;

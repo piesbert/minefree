@@ -15,6 +15,7 @@
  */
 
 #include "inputmanager.h"
+#include "log.h"
 
 InputManager::InputManager() : m_mouse(0), m_keyboard(0), m_input(0), m_actionManager(ActionManager::getInstance()) {
 }
@@ -53,15 +54,24 @@ void InputManager::init(Ogre::RenderWindow *window) {
                 if (m_input->getNumberOfDevices(OIS::OISKeyboard) > 0) {
                         m_keyboard = static_cast<OIS::Keyboard*>(m_input->createInputObject(OIS::OISKeyboard, true));
                         m_keyboard->setEventCallback(this);
+                        LOGINF("Keyboard initializez");
                 }
         }
 }
 
+void InputManager::capture() const {
+        if (m_keyboard) {
+                m_keyboard->capture();
+        }
+}
+
 bool InputManager::keyPressed(const OIS::KeyEvent &e) {
+        m_actionManager.broadcast(e, true);
         return true;
 }
 
 bool InputManager::keyReleased(const OIS::KeyEvent &e) {
+        m_actionManager.broadcast(e, false);
         return true;
 }
 

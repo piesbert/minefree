@@ -20,7 +20,11 @@
 #include "build.h"
 #include "config.h"
 
-OgreWrapper::OgreWrapper() : m_root(0), m_renderSystem(0), m_renderWindow(0) {
+OgreWrapper::OgreWrapper() :
+m_root(0),
+m_renderSystem(0),
+m_renderWindow(0), 
+m_inputManager(0) {
 }
 
 OgreWrapper::~OgreWrapper() {
@@ -39,6 +43,17 @@ void OgreWrapper::init() {
                         initRootObject();
                         createWindow();
                 }
+        }
+
+        if (m_renderWindow) {
+                m_inputManager = new InputManager();
+                m_inputManager->init(m_renderWindow);
+        }
+}
+
+void OgreWrapper::captureEvents() const {
+        if (m_inputManager) {
+                m_inputManager->capture();
         }
 }
 

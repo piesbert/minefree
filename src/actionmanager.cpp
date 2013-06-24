@@ -15,8 +15,10 @@
  */
 
 #include "actionmanager.h"
+#include "log.h"
 
 ActionManager::ActionManager() {
+        prepareDefaults();
 }
 
 ActionManager::~ActionManager() {
@@ -33,13 +35,16 @@ void ActionManager::prepareDefaults() {
 }
 
 bool ActionManager::addListener(ActionManager::ActionID id, const Callback callback, const std::string &name) {
+        LOGINF("ADDED");
         return events[id].add(callback, name);
 }
 
 void ActionManager::removeListener(ActionManager::ActionID id, const std::string &name) {
         events[id].remove(name);
 }
+
 void ActionManager::broadcast(const OIS::KeyEvent &event, bool value) {
+        LOGINF("BROADCAST " << event.key);
         for (int i = 0; i < (int)ActionManager::MAX; i++) {
                 if (events[i].match(event)) {
                         events[i].run(value);

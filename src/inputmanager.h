@@ -31,6 +31,7 @@ class InputManager : public OIS::KeyListener, public OIS::MouseListener {
                 virtual ~InputManager();
 
                 void init(Ogre::RenderWindow *window);
+                void capture() const;
 
         private:
                 OIS::Mouse        *m_mouse;

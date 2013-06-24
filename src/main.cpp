@@ -21,6 +21,11 @@
 #include "scene.h"
 
 #include "ogrewrapper.h"
+#include "inputmanager.h"
+
+void quitCallback(bool asdf) {
+        exit(0);
+}
 
 int main(int argc, char **argv) {
 #if 0
@@ -47,8 +52,11 @@ int main(int argc, char **argv) {
         OgreWrapper ogre;
         ogre.init();
 
+        ActionManager::getInstance().addListener(ActionManager::QUIT, quitCallback, "QUIT");
+
         while (!(ogre.getRenderWindow()->isClosed())) {
                 Ogre::WindowEventUtilities::messagePump();
+                ogre.captureEvents();
         }
 
         return 0;

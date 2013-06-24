@@ -24,12 +24,15 @@
 
 #include <exception>
 
+#include "inputmanager.h"
+
 class OgreWrapper {
         public:
                 OgreWrapper();
                 virtual ~OgreWrapper();
 
                 void init();
+                void captureEvents() const;
 
                 Ogre::RenderWindow* getRenderWindow();
 
@@ -42,6 +45,8 @@ class OgreWrapper {
                 Ogre::RenderSystem *m_renderSystem;
                 Ogre::RenderWindow *m_renderWindow;
                 Ogre::LogManager   *m_logManager;
+
+                InputManager       *m_inputManager;
 
                 void initLogManager();
                 void createRootObject();
