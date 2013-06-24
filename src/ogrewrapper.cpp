@@ -68,10 +68,9 @@ void OgreWrapper::loadPlugins() {
         
         bool isDebug = OGRE_DEBUG_MODE;
 
-        plugins.push_back("/usr/lib/x86_64-linux-gnu/OGRE-1.8.0/RenderSystem_GL");
-        plugins.push_back("/usr/lib/x86_64-linux-gnu/OGRE-1.8.0/Plugin_ParticleFX");
-        //plugins.push_back("/usr/lib/x86_64-linux-gnu/OGRE-1.7.4/Plugin_CgProgramManager");
-        plugins.push_back("/usr/lib/x86_64-linux-gnu/OGRE-1.8.0/Plugin_OctreeSceneManager");
+        plugins.push_back(std::string(OGRE_PLUGINS_PATH) + "RenderSystem_GL");
+        plugins.push_back(std::string(OGRE_PLUGINS_PATH) + "Plugin_ParticleFX");
+        plugins.push_back(std::string(OGRE_PLUGINS_PATH) + "Plugin_OctreeSceneManager");
         
         for (i = plugins.begin(); i < plugins.end(); i++) {
                 Ogre::String &plugin = (*i);

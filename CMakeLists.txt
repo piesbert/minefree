@@ -20,7 +20,11 @@ find_package(SDL REQUIRED)
 find_package(OGRE REQUIRED)
 find_package(OIS REQUIRED)
 
-message(${OGRE_PLUGIN_DIR_TMP} "****************************")
+set(OGRE_PLUGIN_DIR_REL $ENV{OGRE_PLUGIN_DIR})
+set(OGRE_PLUGIN_DIR_DBG $ENV{OGRE_PLUGIN_DIR})
+
+message(${OGRE_LIBRARY_DIR_REL} "****************************")
+message(${OGRE_PLUGIN_DIR_REL} "****************************")
 
 link_libraries (
         ${SDL_LIBRARY}

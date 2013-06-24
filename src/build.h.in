@@ -27,4 +27,6 @@ const char* const OGRE_CFG_PATH = "";
 
 const char* const OGRE_LOG_PATH = "ogre.log";
 
+const char* const OGRE_PLUGINS_PATH = "@OGRE_PLUGIN_DIR_REL@";
+
 #endif //LOCK_MINEFREE_BUILD_H
