@@ -24,6 +24,9 @@ OgreWrapper::OgreWrapper() :
 m_root(0),
 m_renderSystem(0),
 m_renderWindow(0), 
+m_logManager(0),
+m_sceneManager(0),
+m_rootSceneNode(0),
 m_inputManager(0) {
 }
 
@@ -48,7 +51,9 @@ void OgreWrapper::init() {
         if (m_renderWindow) {
                 m_inputManager = new InputManager();
                 m_inputManager->init(m_renderWindow);
-        }
+
+                prepareScene();
+       }
 }
 
 void OgreWrapper::captureEvents() const {
@@ -57,8 +62,12 @@ void OgreWrapper::captureEvents() const {
         }
 }
 
-Ogre::RenderWindow* OgreWrapper::getRenderWindow() {
+Ogre::RenderWindow *OgreWrapper::getRenderWindow() {
         return m_renderWindow;
+}
+
+Ogre::SceneNode *OgreWrapper::getRootSceneNode() {
+        return m_rootSceneNode;
 }
 
 void OgreWrapper::initLogManager() {
@@ -135,4 +144,9 @@ void OgreWrapper::createWindow() {
                 height,
                 fullscreen,
                 &params);
+}
+
+void OgreWrapper::prepareScene() {
+        m_sceneManager = m_root->createSceneManager(Ogre::ST_GENERIC, "SceneManager");
+        m_rootSceneNode = m_sceneManager->getRootSceneNode();
 }

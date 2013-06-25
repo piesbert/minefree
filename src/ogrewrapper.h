@@ -34,7 +34,8 @@ class OgreWrapper {
                 void init();
                 void captureEvents() const;
 
-                Ogre::RenderWindow* getRenderWindow();
+                Ogre::RenderWindow *getRenderWindow();
+                Ogre::SceneNode    *getRootSceneNode();
 
         private:
                 Ogre::String m_configFile;
@@ -45,6 +46,8 @@ class OgreWrapper {
                 Ogre::RenderSystem *m_renderSystem;
                 Ogre::RenderWindow *m_renderWindow;
                 Ogre::LogManager   *m_logManager;
+                Ogre::SceneManager *m_sceneManager;
+                Ogre::SceneNode    *m_rootSceneNode;
 
                 InputManager       *m_inputManager;
 
@@ -54,6 +57,7 @@ class OgreWrapper {
                 void selectRenderSystem();
                 void initRootObject();
                 void createWindow();
+                void prepareScene();
 
                 OgreWrapper(OgreWrapper const&); // do not implement
                 OgreWrapper operator=(OgreWrapper const&); // do not implement
