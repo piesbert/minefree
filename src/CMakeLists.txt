@@ -7,6 +7,7 @@ set(SOURCE_FILES
                 callbackqueue.cpp
                 event.cpp
                 ogrewrapper.cpp
+                fppcamera.cpp
                 )
 
 add_executable(minefree ${SOURCE_FILES} )

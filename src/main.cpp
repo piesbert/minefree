@@ -17,40 +17,24 @@
 #include "build.h"
 #include "ogrewrapper.h"
 #include "inputmanager.h"
+#include "fppcamera.h"
+
 
 void quitCallback(bool asdf) {
         exit(0);
 }
 
 int main(int argc, char **argv) {
-#if 0
-        int error = 0;
-
-        SdlHandler  sdlHandler;
-        OgreHandler ogreHandler;
-        GameLoop    gameLoop(ogreHandler);
-        Scene       scene(ogreHandler);
-
-        error = sdlHandler.init();
-
-        if (!error) {
-                error = ogreHandler.init();
-        }
-
-        if (!error) {
-                scene.init();
-                gameLoop.run();
-        }
-
-        return error;
-#endif
         OgreWrapper ogre;
+        FppCamera camera;
+
         ogre.init();
+        camera.init(ogre);
 
         ActionManager::getInstance().addListener(ActionManager::QUIT, quitCallback, "QUIT");
 
         while (!(ogre.getRenderWindow()->isClosed())) {
-                Ogre::WindowEventUtilities::messagePump();
+                ogre.update();
                 ogre.captureEvents();
         }
 

@@ -62,11 +62,23 @@ void OgreWrapper::captureEvents() const {
         }
 }
 
-Ogre::RenderWindow *OgreWrapper::getRenderWindow() {
+void OgreWrapper::update() const {
+        m_renderWindow->update(false);
+        m_renderWindow->swapBuffers(true);
+        m_root->renderOneFrame();
+
+        Ogre::WindowEventUtilities::messagePump();
+}
+
+Ogre::RenderWindow *OgreWrapper::getRenderWindow() const {
         return m_renderWindow;
 }
 
-Ogre::SceneNode *OgreWrapper::getRootSceneNode() {
+Ogre::SceneManager *OgreWrapper::getSceneManager() const {
+        return m_sceneManager;
+}
+
+Ogre::SceneNode *OgreWrapper::getRootSceneNode() const {
         return m_rootSceneNode;
 }
 
@@ -144,6 +156,9 @@ void OgreWrapper::createWindow() {
                 height,
                 fullscreen,
                 &params);
+
+        m_renderWindow->setActive(true);
+        m_renderWindow->setAutoUpdated(false);
 }
 
 void OgreWrapper::prepareScene() {

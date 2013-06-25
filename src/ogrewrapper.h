@@ -32,10 +32,13 @@ class OgreWrapper {
                 virtual ~OgreWrapper();
 
                 void init();
-                void captureEvents() const;
 
-                Ogre::RenderWindow *getRenderWindow();
-                Ogre::SceneNode    *getRootSceneNode();
+                void captureEvents() const;
+                void update() const;
+
+                Ogre::RenderWindow *getRenderWindow() const;
+                Ogre::SceneManager *getSceneManager() const;
+                Ogre::SceneNode    *getRootSceneNode() const;
 
         private:
                 Ogre::String m_configFile;
