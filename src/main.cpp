@@ -14,12 +14,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "sdlhandler.h"
-#include "ogrehandler.h"
-#include "gameloop.h"
 #include "build.h"
-#include "scene.h"
-
 #include "ogrewrapper.h"
 #include "inputmanager.h"
 
