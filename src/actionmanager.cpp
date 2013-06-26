@@ -42,6 +42,18 @@ void ActionManager::prepareDefaults() {
         events[MENU_DOWN].setKey(OIS::KC_DOWN);
         events[MENU_SELECT].setType(InputEvent::KEYBOARD);
         events[MENU_SELECT].setKey(OIS::KC_RETURN);
+
+        /* Move events
+         */
+        events[MOVE_FORWARD].setType(InputEvent::KEYBOARD);
+        events[MOVE_FORWARD].setKey(OIS::KC_UP);
+        events[MOVE_BACKWARD].setType(InputEvent::KEYBOARD);
+        events[MOVE_BACKWARD].setKey(OIS::KC_DOWN);
+        events[MOVE_LEFT].setType(InputEvent::KEYBOARD);
+        events[MOVE_LEFT].setKey(OIS::KC_LEFT);
+        events[MOVE_RIGHT].setType(InputEvent::KEYBOARD);
+        events[MOVE_RIGHT].setKey(OIS::KC_RIGHT);
+
 }
 
 bool ActionManager::addListener(ActionManager::ActionID id, const Callback callback, const std::string &name) {

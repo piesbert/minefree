@@ -15,13 +15,20 @@
  */
 
 #include "fppcamera.h"
+#include "motionstate.h"
+
 #include <OGRE/OgreManualObject.h>
 #include <OGRE/OgreEntity.h>
 
 FppCamera::FppCamera() :
 m_camera(0),
 m_cameraNode(0),
-m_viewport(0) {
+m_yawNode(0),
+m_pitchNode(0),
+m_rollNode(0),
+m_viewport(0),
+m_transVector(Ogre::Vector3::ZERO),
+m_moveStep(1.0f) {
 }
 
 FppCamera::~FppCamera() {
@@ -31,7 +38,11 @@ void FppCamera::init(const OgreWrapper &ogre) {
         m_camera = ogre.getSceneManager()->createCamera("FPPCamera");
         
         m_cameraNode = ogre.getRootSceneNode()->createChildSceneNode("FPPCameraNode");
-        m_cameraNode->attachObject(m_camera);
+        m_yawNode    = m_cameraNode->createChildSceneNode();
+        m_pitchNode  = m_yawNode->createChildSceneNode();
+        m_rollNode   = m_pitchNode->createChildSceneNode();
+
+        m_rollNode->attachObject(m_camera);
 
         createViewport(ogre);
 
@@ -47,16 +58,27 @@ void FppCamera::init(const OgreWrapper &ogre) {
         }
 }
 
-void FppCamera::forward(bool run) {
-        if (run) {
-                m_camera->setPosition(m_camera->getPosition() + Ogre::Vector3(0,0,1));
-        }
-}
+void FppCamera::transform() {
+        MotionState &state = MotionState::getInstance();
+        Ogre::Vector3 transVector = Ogre::Vector3::ZERO;
 
-void FppCamera::backward(bool run) {
-        if (run) {
-                m_camera->setPosition(m_camera->getPosition() - Ogre::Vector3(0,0,1));
+        if (state.goForward()) {
+                transVector.z -= m_moveStep;
         }
+
+        if (state.goBackward()) {
+                transVector.z += m_moveStep;
+        }
+
+        if (state.goStrafeLeft()) {
+                transVector.x -= m_moveStep;
+        }
+
+        if (state.goStrafeRight()) {
+                transVector.x += m_moveStep;
+        }
+
+        m_cameraNode->translate(transVector, Ogre::Node::TS_LOCAL);
 }
 
 void FppCamera::createViewport(const OgreWrapper &ogre) {

@@ -30,6 +30,8 @@ class ActionManager {
                         MENU_UP,
                         MENU_DOWN,
                         MENU_SELECT,
+                        MOVE_FORWARD,
+                        MOVE_BACKWARD,
                         MOVE_UP,
                         MOVE_DOWN,
                         MOVE_LEFT,

@@ -8,6 +8,7 @@ set(SOURCE_FILES
                 event.cpp
                 ogrewrapper.cpp
                 fppcamera.cpp
+                motionstate.cpp
                 )
 
 add_executable(minefree ${SOURCE_FILES} )

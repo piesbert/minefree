@@ -18,6 +18,7 @@
 #include "ogrewrapper.h"
 #include "inputmanager.h"
 #include "fppcamera.h"
+#include "motionstate.h"
 
 
 void quitCallback(bool asdf) {
@@ -27,15 +28,23 @@ void quitCallback(bool asdf) {
 int main(int argc, char **argv) {
         OgreWrapper ogre;
         FppCamera camera;
+        MotionState &motion = MotionState::getInstance();
 
         ogre.init();
         camera.init(ogre);
 
         ActionManager::getInstance().addListener(ActionManager::QUIT, quitCallback, "QUIT");
+        
+        ActionManager::getInstance().addListener(ActionManager::MOVE_FORWARD, MotionState::setForward, "FORWARD");
+        ActionManager::getInstance().addListener(ActionManager::MOVE_BACKWARD, MotionState::setBackward, "BACKWARD");
+        ActionManager::getInstance().addListener(ActionManager::MOVE_LEFT, MotionState::setStrafeLeft, "STRAFELEFT");
+        ActionManager::getInstance().addListener(ActionManager::MOVE_RIGHT, MotionState::setStrafeRight, "STRAFERIGHT");
+
 
         while (!(ogre.getRenderWindow()->isClosed())) {
                 ogre.update();
                 ogre.captureEvents();
+                camera.transform();
         }
 
         return 0;

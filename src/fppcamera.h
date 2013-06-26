@@ -26,13 +26,27 @@ class FppCamera {
 
                 void init(const OgreWrapper &);
 
-                void forward(bool);
-                void backward(bool);
+                void moveForward();
+                void moveBackward();
+                void strafeLeft();
+                void strafeRight();
+                void rotateLeft();
+                void rotateRight();
+
+                void transform();
 
         private:
                 Ogre::Camera    *m_camera;
+
                 Ogre::SceneNode *m_cameraNode;
+                Ogre::SceneNode *m_yawNode;
+                Ogre::SceneNode *m_pitchNode;
+                Ogre::SceneNode *m_rollNode;
+
                 Ogre::Viewport  *m_viewport;
+
+                Ogre::Vector3    m_transVector;
+                float            m_moveStep;
 
                 void createViewport(const OgreWrapper &);
                 void test(const OgreWrapper &);
