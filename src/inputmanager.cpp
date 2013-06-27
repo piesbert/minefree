@@ -15,6 +15,7 @@
  */
 
 #include "inputmanager.h"
+#include "motionstate.h"
 
 InputManager::InputManager() :
 m_mouse(0),
@@ -58,12 +59,30 @@ void InputManager::init(Ogre::RenderWindow *window) {
                         m_keyboard = static_cast<OIS::Keyboard*>(m_input->createInputObject(OIS::OISKeyboard, true));
                         m_keyboard->setEventCallback(this);
                 }
+
+                if (m_input->getNumberOfDevices(OIS::OISMouse) > 0) {
+                        unsigned int width;
+                        unsigned int height;
+                        unsigned int depth;
+
+                        int left;
+                        int top;
+                        
+                        m_mouse = static_cast<OIS::Mouse*>(m_input->createInputObject(OIS::OISMouse, true));
+                        m_mouse->setEventCallback(this);
+
+                        window->getMetrics(width, height, depth, left, top);
+                        setWindowExtents(width, height);
+                }
         }
 }
 
 void InputManager::capture() const {
         if (m_keyboard) {
                 m_keyboard->capture();
+        }
+        if (m_mouse) {
+                m_mouse->capture();
         }
 }
 
@@ -78,6 +97,11 @@ bool InputManager::keyReleased(const OIS::KeyEvent &e) {
 }
 
 bool InputManager::mouseMoved(const OIS::MouseEvent &e) {
+        if (m_mouse) {
+                MotionState::getInstance().setPitch(e.state.Y.rel);
+                MotionState::getInstance().setYaw(e.state.X.rel);
+        }
+
         return true;
 }
 
@@ -87,4 +111,11 @@ bool InputManager::mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id)
 
 bool InputManager::mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id) {
         return true;
+}
+
+void InputManager::setWindowExtents(int width, int height) {
+        const OIS::MouseState &state = m_mouse->getMouseState();
+
+        state.width = width;
+        state.height = height;
 }

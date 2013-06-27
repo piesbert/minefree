@@ -49,6 +49,8 @@ class InputManager : public OIS::KeyListener, public OIS::MouseListener {
                 bool mouseMoved(const OIS::MouseEvent &e);
                 bool mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id);
                 bool mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id);
+
+                void setWindowExtents(int width, int height);
 }; // class InputManager
 
 #endif //LOCK_MINEFREE_INPUTMANAGER_H
