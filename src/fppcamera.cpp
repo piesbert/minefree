@@ -78,7 +78,10 @@ void FppCamera::transform() {
                 transVector.x += m_moveStep;
         }
 
-        m_cameraNode->translate(transVector, Ogre::Node::TS_LOCAL);
+        m_pitchNode->pitch(Ogre::Radian(MotionState::getInstance().getPitch()));
+        m_yawNode->yaw(Ogre::Radian(MotionState::getInstance().getYaw()));
+
+        m_cameraNode->translate(m_yawNode->getOrientation() * m_pitchNode->getOrientation() * transVector, Ogre::Node::TS_LOCAL);
 }
 
 void FppCamera::createViewport(const OgreWrapper &ogre) {

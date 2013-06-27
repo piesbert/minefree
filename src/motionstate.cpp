@@ -21,6 +21,9 @@ bool MotionState::m_backward = false;
 bool MotionState::m_strafeLeft = false;
 bool MotionState::m_strafeRight = false;
 
+float MotionState::m_pitch = 0;
+float MotionState::m_yaw = 0;
+
 MotionState::MotionState() {
 }
 
@@ -57,3 +60,26 @@ void MotionState::setStrafeRight(bool state) {
         }
 }
 
+void MotionState::setPitch(float pitch) {
+        m_pitch -= pitch / 100;
+}
+
+void MotionState::setYaw(float yaw) {
+        m_yaw -= yaw / 100;
+}
+
+float MotionState::getPitch() {
+        float retval = m_pitch;
+
+        m_pitch = 0;
+
+        return retval;
+}
+
+float MotionState::getYaw() {
+        float retval = m_yaw;
+
+        m_yaw = 0;
+
+        return retval;
+}

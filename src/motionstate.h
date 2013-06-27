@@ -33,11 +33,21 @@ class MotionState {
                 static bool goStrafeLeft() { return m_strafeLeft; };
                 static bool goStrafeRight() { return m_strafeRight; };
 
+
+                static void setPitch(float pitch);
+                static void setYaw(float yaw);
+
+                static float getPitch();
+                static float getYaw();
+
         private:
                 static bool m_forward;
                 static bool m_backward;
                 static bool m_strafeLeft;
                 static bool m_strafeRight;
+
+                static float m_pitch;
+                static float m_yaw;
 
                 MotionState();
                 MotionState(MotionState const&); // do not implement
