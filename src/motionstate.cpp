@@ -24,7 +24,9 @@ bool MotionState::m_strafeRight = false;
 float MotionState::m_pitch = 0;
 float MotionState::m_yaw = 0;
 
-MotionState::MotionState() {
+Ogre::Timer MotionState::m_timer;
+
+MotionState::MotionState() { 
 }
 
 MotionState::~MotionState() {
@@ -61,11 +63,11 @@ void MotionState::setStrafeRight(bool state) {
 }
 
 void MotionState::setPitch(float pitch) {
-        m_pitch -= pitch / 100;
+        m_pitch -= pitch / 200;
 }
 
 void MotionState::setYaw(float yaw) {
-        m_yaw -= yaw / 100;
+        m_yaw -= yaw / 200;
 }
 
 float MotionState::getPitch() {
@@ -80,6 +82,17 @@ float MotionState::getYaw() {
         float retval = m_yaw;
 
         m_yaw = 0;
+
+        return retval;
+}
+
+bool MotionState::needMove() {
+        bool retval = false;
+
+        if (m_timer.getMilliseconds() > 25) {
+                retval = true;
+                m_timer.reset();
+        }
 
         return retval;
 }
