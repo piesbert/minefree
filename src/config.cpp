@@ -48,7 +48,7 @@ std::string Config::getScreenWindowTitle() const {
 }
 
 std::string Config::getScreenParamFSAA() const {
-        return "0";
+        return "4";
 }
 
 std::string Config::getScreenParamVSync() const {

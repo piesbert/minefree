@@ -41,10 +41,14 @@ int main(int argc, char **argv) {
         ActionManager::getInstance().addListener(ActionManager::MOVE_RIGHT, MotionState::setStrafeRight, "STRAFERIGHT");
 
 
+        MotionState::resetTimer();
+
         while (!(ogre.getRenderWindow()->isClosed())) {
-                ogre.update();
                 ogre.captureEvents();
-                camera.transform();
+                if (MotionState::needMove()) {
+                        camera.transform();
+                }
+                ogre.update();
         }
 
         return 0;

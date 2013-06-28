@@ -17,6 +17,8 @@
 #if !defined(LOCK_MINEFREE_MOTIONSTATE_H)
 #define LOCK_MINEFREE_MOTIONSTATE_H
 
+#include <OGRE/OgreTimer.h>
+
 class MotionState {
         public:
                 static MotionState &getInstance();
@@ -33,12 +35,14 @@ class MotionState {
                 static bool goStrafeLeft() { return m_strafeLeft; };
                 static bool goStrafeRight() { return m_strafeRight; };
 
-
                 static void setPitch(float pitch);
                 static void setYaw(float yaw);
 
                 static float getPitch();
                 static float getYaw();
+
+                static void resetTimer() { m_timer.reset(); };
+                static bool needMove();
 
         private:
                 static bool m_forward;
@@ -48,6 +52,8 @@ class MotionState {
 
                 static float m_pitch;
                 static float m_yaw;
+
+                static Ogre::Timer m_timer;
 
                 MotionState();
                 MotionState(MotionState const&); // do not implement
