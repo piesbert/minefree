@@ -9,6 +9,7 @@ set(SOURCE_FILES
                 ogrewrapper.cpp
                 fppcamera.cpp
                 motionstate.cpp
+                quakeconsole.cpp
                 )
 
 add_executable(minefree ${SOURCE_FILES} )
