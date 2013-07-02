@@ -15,5 +15,9 @@ set(SOURCE_FILES
 add_executable(minefree ${SOURCE_FILES} )
 
 set(Config_Path ${CMAKE_BINARY_DIR}/config/)
+set(Materials_Path ${CMAKE_BINARY_DIR}/materials)
+
+set(QuakeConsole_Materials ${Materials_Path}/quakeconsole)
+
 configure_file(build.h.in ${CMAKE_BINARY_DIR}/config/build.h)
 include_directories(${CMAKE_BINARY_DIR}/config/)

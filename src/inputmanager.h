@@ -18,6 +18,7 @@
 #define LOCK_MINEFREE_INPUTMANAGER_H
 
 #include "actionmanager.h"
+#include "quakeconsole.h"
 
 #include <OIS/OISMouse.h>
 #include <OIS/OISKeyboard.h>
@@ -30,7 +31,7 @@ class InputManager : public OIS::KeyListener, public OIS::MouseListener {
                 InputManager();
                 virtual ~InputManager();
 
-                void init(Ogre::RenderWindow *window);
+                void init(Ogre::Root *, Ogre::RenderWindow *);
                 void capture() const;
 
         private:
@@ -39,16 +40,17 @@ class InputManager : public OIS::KeyListener, public OIS::MouseListener {
                 OIS::InputManager *m_input;
 
                 ActionManager     &m_actionManager;
+                QuakeConsole      *m_console;
 
                 InputManager(InputManager const&); // do not implement
                 InputManager operator=(InputManager const&); // do not implement
 
-                bool keyPressed(const OIS::KeyEvent &e);
-                bool keyReleased(const OIS::KeyEvent &e);
+                bool keyPressed(const OIS::KeyEvent &);
+                bool keyReleased(const OIS::KeyEvent &);
 
-                bool mouseMoved(const OIS::MouseEvent &e);
-                bool mousePressed(const OIS::MouseEvent &e, OIS::MouseButtonID id);
-                bool mouseReleased(const OIS::MouseEvent &e, OIS::MouseButtonID id);
+                bool mouseMoved(const OIS::MouseEvent &);
+                bool mousePressed(const OIS::MouseEvent &, OIS::MouseButtonID);
+                bool mouseReleased(const OIS::MouseEvent &, OIS::MouseButtonID);
 
                 void setWindowExtents(int width, int height);
 }; // class InputManager

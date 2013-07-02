@@ -36,6 +36,7 @@ class OgreWrapper {
                 void captureEvents() const;
                 void update() const;
 
+                Ogre::Root         *getRoot() const;
                 Ogre::RenderWindow *getRenderWindow() const;
                 Ogre::SceneManager *getSceneManager() const;
                 Ogre::SceneNode    *getRootSceneNode() const;

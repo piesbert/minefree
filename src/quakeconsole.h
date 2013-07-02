@@ -24,25 +24,40 @@
 
 #include <string>
 #include <list>
-#include <vector>
 
 class QuakeConsole : public Ogre::FrameListener, Ogre::LogListener {
         public:
-                static QuakeConsole& getInstance();
+                QuakeConsole();
                 virtual ~QuakeConsole();
 
                 void init(Ogre::Root *);
 
                 void setVisible(bool);
-                void getVisible();
+                bool getVisible() const;
+
+                void onKeyPressed(const OIS::KeyEvent &);
 
                 virtual bool frameStarted(const Ogre::FrameEvent &);
                 virtual bool frameEnded(const Ogre::FrameEvent &);
 
+                /* OGRE ver. 1.8.0
+                 */
                 void messageLogged(const Ogre::String &, Ogre::LogMessageLevel, bool, const Ogre::String &, bool&);
 
+                /* OGRE ver. 1.7.4
+                 */
+                void messageLogged(const Ogre::String &, Ogre::LogMessageLevel, bool, const Ogre::String &);
+
         private:
-                QuakeConsole();
+                Ogre::Root             *m_root;
+                Ogre::SceneManager     *m_sceneManager;
+                Ogre::Overlay          *m_overlay;
+                Ogre::OverlayElement   *m_textbox;
+                Ogre::OverlayContainer *m_panel;
+
+                bool  m_visible;
+                float m_height;
+
                 QuakeConsole(QuakeConsole const&); // do not implement
                 QuakeConsole operator=(QuakeConsole const&); // do not implement
 }; // class QuakeConsole

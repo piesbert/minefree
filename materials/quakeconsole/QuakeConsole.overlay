@@ -1,0 +1,23 @@
+QuakeConsole
+{
+        zorder 100 
+
+        container BorderPanel(QuakeConsole/Background) 
+        {   
+                metrics_mode relative
+                material QuakeConsole/Background
+                height 0.4 
+                width 1.0 
+
+                element  TextArea(QuakeConsole/Text) 
+                {   
+                        metrics_mode relative
+                        font_name QuakeConsole
+                        colour_top 1.0 1.0 1.0 
+                        colour_bottom 1.0 1.0 1.0 
+                        char_height 0.025
+                }   
+        }   
+}
+
+

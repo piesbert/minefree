@@ -49,10 +49,10 @@ void OgreWrapper::init() {
         }
 
         if (m_renderWindow) {
-                m_inputManager = new InputManager();
-                m_inputManager->init(m_renderWindow);
-
                 prepareScene();
+
+                m_inputManager = new InputManager();
+                m_inputManager->init(m_root, m_renderWindow);
        }
 }
 
@@ -68,6 +68,10 @@ void OgreWrapper::update() const {
         m_root->renderOneFrame();
 
         Ogre::WindowEventUtilities::messagePump();
+}
+
+Ogre::Root *OgreWrapper::getRoot() const {
+        return m_root;
 }
 
 Ogre::RenderWindow *OgreWrapper::getRenderWindow() const {
@@ -95,6 +99,8 @@ void OgreWrapper::createRootObject() {
 
         if (!m_root) {
                 m_root = new Ogre::Root(m_configFile, m_pluginsFile, m_logFile);
+
+
         }
 }
 
@@ -159,6 +165,10 @@ void OgreWrapper::createWindow() {
 
         m_renderWindow->setActive(true);
         m_renderWindow->setAutoUpdated(false);
+
+
+        Ogre::ResourceGroupManager::getSingleton().addResourceLocation(QUAKECONSOLE_MATERIALS_PATH, "FileSystem");
+        Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 }
 
 void OgreWrapper::prepareScene() {

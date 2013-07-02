@@ -29,4 +29,6 @@ const char* const OGRE_LOG_PATH = "ogre.log";
 
 const char* const OGRE_PLUGINS_PATH = "@OGRE_PLUGIN_DIR_REL@";
 
+const char* const QUAKECONSOLE_MATERIALS_PATH = "@QuakeConsole_Materials@";
+
 #endif //LOCK_MINEFREE_BUILD_H

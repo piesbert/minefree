@@ -15,19 +15,70 @@
  */
 
 #include "quakeconsole.h"
+#include "build.h"
+#include "log.h"
 
-QuakeConsole::QuakeConsole() {
+QuakeConsole::QuakeConsole() :
+m_root(0),
+m_sceneManager(0),
+m_overlay(0),
+m_textbox(0),
+m_panel(0),
+m_visible(false),
+m_height(0.0) {
 }
 
 QuakeConsole::~QuakeConsole() {
 }
 
-QuakeConsole& QuakeConsole::getInstance() {
-        static QuakeConsole instance;
-        return instance;
+void QuakeConsole::init(Ogre::Root *root) {
+        m_root = root;
+        m_root->addFrameListener(this);
+
+        m_sceneManager = m_root->getSceneManagerIterator().getNext();
+
+        m_overlay = Ogre::OverlayManager::getSingleton().getByName("QuakeConsole");
+        m_textbox = Ogre::OverlayManager::getSingleton().getOverlayElement("QuakeConsole/Text");
+        m_panel = static_cast<Ogre::OverlayContainer*>(Ogre::OverlayManager::getSingleton().getOverlayElement("QuakeConsole/Background"));
+        m_overlay->show();
+       
+        Ogre::LogManager::getSingleton().getDefaultLog()->addListener(this);
+}
+
+void QuakeConsole::onKeyPressed(const OIS::KeyEvent &e) {
+        if (!m_visible) {
+                return;
+        }
+}
+
+void QuakeConsole::setVisible(bool visible) {
+        m_visible = visible;
+}
+
+bool QuakeConsole::getVisible() const {
+        return m_visible;
 }
 
 bool QuakeConsole::frameStarted(const Ogre::FrameEvent &e) {
+        if (m_visible && (m_height < 1)) {
+                m_height += e.timeSinceLastFrame * 4;
+                m_textbox->show();
+
+                if (m_height >= 1) {
+                        m_height = 1;
+                }
+        }
+        else if (!m_visible && (m_height > 0)) {
+                m_height -= e.timeSinceLastFrame * 4;
+                if (m_height <= 0) {
+                        m_height = 0;
+                        m_textbox->hide();
+                }
+        }
+
+        m_textbox->setPosition(0, (m_height -1) * 0.5);
+        m_panel->setPosition(0, (m_height -1) * 0.5);
+
         return true;
 }
 
@@ -38,3 +89,5 @@ bool QuakeConsole::frameEnded(const Ogre::FrameEvent &e) {
 void QuakeConsole::messageLogged(const Ogre::String &msg, Ogre::LogMessageLevel logLevel, bool debug, const Ogre::String &logName, bool &value) {
 }
 
+void QuakeConsole::messageLogged(const Ogre::String &msg, Ogre::LogMessageLevel logLevel, bool debug, const Ogre::String &logName) {
+}

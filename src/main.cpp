@@ -19,7 +19,7 @@
 #include "inputmanager.h"
 #include "fppcamera.h"
 #include "motionstate.h"
-
+#include "log.h"
 
 void quitCallback(bool asdf) {
         exit(0);
@@ -28,7 +28,6 @@ void quitCallback(bool asdf) {
 int main(int argc, char **argv) {
         OgreWrapper ogre;
         FppCamera camera;
-        MotionState &motion = MotionState::getInstance();
 
         ogre.init();
         camera.init(ogre);

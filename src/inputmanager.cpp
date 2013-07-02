@@ -21,7 +21,8 @@ InputManager::InputManager() :
 m_mouse(0),
 m_keyboard(0),
 m_input(0),
-m_actionManager(ActionManager::getInstance()) {
+m_actionManager(ActionManager::getInstance()),
+m_console(0) {
 }
 
 InputManager::~InputManager() {
@@ -41,7 +42,7 @@ InputManager::~InputManager() {
         }
 }
 
-void InputManager::init(Ogre::RenderWindow *window) {
+void InputManager::init(Ogre::Root *root, Ogre::RenderWindow *window) {
         if (!m_input) {
                 OIS::ParamList paramList;
                 std::ostringstream windowHandlerStream;
@@ -75,6 +76,11 @@ void InputManager::init(Ogre::RenderWindow *window) {
                         setWindowExtents(width, height);
                 }
         }
+
+        if (!m_console) {
+                m_console = new QuakeConsole();
+                m_console->init(root);
+        }
 }
 
 void InputManager::capture() const {
@@ -87,7 +93,19 @@ void InputManager::capture() const {
 }
 
 bool InputManager::keyPressed(const OIS::KeyEvent &e) {
-        m_actionManager.broadcast(e, true);
+        if (OIS::KC_GRAVE == e.key) {
+                if (m_console->getVisible()) {
+                        m_console->setVisible(false);
+                }
+                else {
+                        m_console->setVisible(true);
+                }
+        }
+
+        if (false == m_console->getVisible()) {
+                m_actionManager.broadcast(e, true);
+        }
+
         return true;
 }
 
