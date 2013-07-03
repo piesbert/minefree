@@ -93,6 +93,13 @@ void InputManager::capture() const {
 }
 
 bool InputManager::keyPressed(const OIS::KeyEvent &e) {
+        if (false == m_console->getVisible()) {
+                m_actionManager.broadcast(e, true);
+        }
+        else {
+                m_console->onKeyPressed(e);
+        }
+
         if (OIS::KC_GRAVE == e.key) {
                 if (m_console->getVisible()) {
                         m_console->setVisible(false);
@@ -100,10 +107,6 @@ bool InputManager::keyPressed(const OIS::KeyEvent &e) {
                 else {
                         m_console->setVisible(true);
                 }
-        }
-
-        if (false == m_console->getVisible()) {
-                m_actionManager.broadcast(e, true);
         }
 
         return true;

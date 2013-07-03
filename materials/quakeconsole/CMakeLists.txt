@@ -2,4 +2,5 @@ configure_file(QuakeConsole.png ${CMAKE_CURRENT_BINARY_DIR}/QuakeConsole.png COP
 configure_file(QuakeConsole.material ${CMAKE_CURRENT_BINARY_DIR}/QuakeConsole.material COPYONLY)
 configure_file(QuakeConsole.overlay ${CMAKE_CURRENT_BINARY_DIR}/QuakeConsole.overlay COPYONLY)
 configure_file(QuakeConsole.fontdef ${CMAKE_CURRENT_BINARY_DIR}/QuakeConsole.fontdef COPYONLY)
-configure_file(Courier_New.ttf ${CMAKE_CURRENT_BINARY_DIR}/Courier_New.ttf COPYONLY)
+configure_file(Crisp.ttf ${CMAKE_CURRENT_BINARY_DIR}/Crisp.ttf COPYONLY)
+configure_file(ProFontWindows.ttf ${CMAKE_CURRENT_BINARY_DIR}/ProFontWindows.ttf COPYONLY)

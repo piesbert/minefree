@@ -36,6 +36,7 @@ class QuakeConsole : public Ogre::FrameListener, Ogre::LogListener {
                 bool getVisible() const;
 
                 void onKeyPressed(const OIS::KeyEvent &);
+                void handleLine(const Ogre::String &);
 
                 virtual bool frameStarted(const Ogre::FrameEvent &);
                 virtual bool frameEnded(const Ogre::FrameEvent &);
@@ -56,7 +57,16 @@ class QuakeConsole : public Ogre::FrameListener, Ogre::LogListener {
                 Ogre::OverlayContainer *m_panel;
 
                 bool  m_visible;
+                bool  m_update;
                 float m_height;
+
+                Ogre::String            m_prompt;
+                std::list<Ogre::String> m_lines;
+                unsigned int            m_lastLine;
+                unsigned int            m_startLine;
+
+                static const Ogre::String c_validChars;
+                static const unsigned int c_maxLines;
 
                 QuakeConsole(QuakeConsole const&); // do not implement
                 QuakeConsole operator=(QuakeConsole const&); // do not implement

@@ -1,7 +1,7 @@
 QuakeConsole
 {
         type       truetype
-        source     Courier_New.ttf
-        size       8
-        resolution 150
+        source     ProFontWindows.ttf
+        size       40
+        resolution 75
 }

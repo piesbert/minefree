@@ -18,14 +18,20 @@
 #include "build.h"
 #include "log.h"
 
+const Ogre::String QuakeConsole::c_validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890+!\"#%&/()=?[]\\*-_.:,; ";
+const unsigned int QuakeConsole::c_maxLines = 15;
+
 QuakeConsole::QuakeConsole() :
 m_root(0),
 m_sceneManager(0),
 m_overlay(0),
 m_textbox(0),
-m_panel(0),
-m_visible(false),
-m_height(0.0) {
+m_panel(0) {
+        m_visible   = false;
+        m_update    = false;
+        m_height    = 0.0;
+        m_lastLine  = 0;
+        m_startLine = 0;
 }
 
 QuakeConsole::~QuakeConsole() {
@@ -46,13 +52,65 @@ void QuakeConsole::init(Ogre::Root *root) {
 }
 
 void QuakeConsole::onKeyPressed(const OIS::KeyEvent &e) {
-        if (!m_visible) {
-                return;
+        if (m_visible) {
+                /* Return pressed.
+                 */
+                if ((OIS::KC_RETURN == e.key) && (m_prompt.length() > 0)) {
+                        handleLine(m_prompt);
+                        m_prompt = "";
+                }
+
+                /* Backspace pressed.
+                 */
+                else if ((OIS::KC_BACK == e.key) && (m_prompt.length() > 0)) {
+                        m_prompt.erase(m_prompt.end() - 1);
+                }
+
+                /* PgUp pressed.
+                 */
+                else if((OIS::KC_PGUP == e.key) && (m_startLine > c_maxLines)) {
+                        m_startLine--;
+                }
+
+                /* PgDown pressed.
+                 */
+                else if((OIS::KC_PGDOWN == e.key) && (m_startLine < m_lastLine)) {
+                        m_startLine++;
+                }
+
+                /* Normal keys.
+                 */
+                else {
+                        size_t length = c_validChars.length();
+
+                        for (size_t i = 0; i < length; i++) {
+                                if (c_validChars[i] == (int)(e.text)) {
+                                        m_prompt += e.text;
+                                        break;
+                                }
+                        }
+                }
+
+                m_update = true;
         }
+}
+
+void QuakeConsole::handleLine(const Ogre::String &line) {
+        m_lines.push_back(line);
+
+        if (m_startLine == m_lastLine) {
+                m_startLine++;
+        }
+
+        m_lastLine++;
 }
 
 void QuakeConsole::setVisible(bool visible) {
         m_visible = visible;
+
+        if (m_visible) {
+                m_update = true;
+        }
 }
 
 bool QuakeConsole::getVisible() const {
@@ -78,6 +136,33 @@ bool QuakeConsole::frameStarted(const Ogre::FrameEvent &e) {
 
         m_textbox->setPosition(0, (m_height -1) * 0.5);
         m_panel->setPosition(0, (m_height -1) * 0.5);
+
+        if (m_update) {
+                Ogre::String text;
+                std::list<Ogre::String>::iterator line;
+                unsigned int counter;
+
+                if (m_startLine > m_lines.size()) {
+                        m_startLine = m_lines.size();
+                }
+
+                line = m_lines.begin();
+                
+                for (int i = 0; i < ((int)(m_startLine) - int(c_maxLines)); i++) {
+                        line++;
+                }
+
+                counter = 0;
+                while ((line != m_lines.end()) && (counter++ < c_maxLines)) {
+                        text += (*line) + "\n";
+                        line++;
+                }
+
+                text += "$ " + m_prompt + "_";
+                m_textbox->setCaption(text);
+
+                m_update = false;
+        }
 
         return true;
 }
