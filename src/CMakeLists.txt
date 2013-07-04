@@ -10,6 +10,8 @@ set(SOURCE_FILES
                 fppcamera.cpp
                 motionstate.cpp
                 quakeconsole.cpp
+                command.cpp
+                commandmanager.cpp
                 )
 
 add_executable(minefree ${SOURCE_FILES} )

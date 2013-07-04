@@ -32,6 +32,7 @@ m_panel(0) {
         m_height    = 0.0;
         m_lastLine  = 0;
         m_startLine = 0;
+        m_newPrefix = true;
 }
 
 QuakeConsole::~QuakeConsole() {
@@ -58,24 +59,44 @@ void QuakeConsole::onKeyPressed(const OIS::KeyEvent &e) {
                 if ((OIS::KC_RETURN == e.key) && (m_prompt.length() > 0)) {
                         handleLine(m_prompt);
                         m_prompt = "";
+                        m_newPrefix = true;
+                        m_commandManager.resetIndex();
                 }
 
                 /* Backspace pressed.
                  */
-                else if ((OIS::KC_BACK == e.key) && (m_prompt.length() > 0)) {
-                        m_prompt.erase(m_prompt.end() - 1);
+                else if (OIS::KC_BACK == e.key) {
+                        if (m_prompt.length() > 0) {
+                                m_prompt.erase(m_prompt.end() - 1);
+                                m_newPrefix = true;
+                        }
+                        
+                        if (0 == m_prompt.length()) {
+                                m_commandManager.resetIndex();
+                        }
                 }
 
                 /* PgUp pressed.
                  */
-                else if((OIS::KC_PGUP == e.key) && (m_startLine > c_maxLines)) {
+                else if ((OIS::KC_PGUP == e.key) && (m_startLine > c_maxLines)) {
                         m_startLine--;
                 }
 
                 /* PgDown pressed.
                  */
-                else if((OIS::KC_PGDOWN == e.key) && (m_startLine < m_lastLine)) {
+                else if ((OIS::KC_PGDOWN == e.key) && (m_startLine < m_lastLine)) {
                         m_startLine++;
+                }
+
+                /* TAB pressed
+                 */
+                else if (OIS::KC_TAB == e.key) {
+                        if (m_newPrefix) {
+                                m_prefix = m_prompt;
+                                m_newPrefix = false;
+                        }
+
+                        m_prompt = m_commandManager.getNext(m_prefix) + " ";
                 }
 
                 /* Normal keys.
@@ -89,6 +110,8 @@ void QuakeConsole::onKeyPressed(const OIS::KeyEvent &e) {
                                         break;
                                 }
                         }
+
+                        m_newPrefix = true;
                 }
 
                 m_update = true;

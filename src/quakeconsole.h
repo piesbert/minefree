@@ -17,6 +17,8 @@
 #if !defined(LOCK_MINEFREE_QUAKECONSOLE_H)
 #define LOCK_MINEFREE_QUAKECONSOLE_H
 
+#include "commandmanager.h"
+
 #include <OGRE/Ogre.h>
 #include <OGRE/OgreFrameListener.h>
 
@@ -59,14 +61,18 @@ class QuakeConsole : public Ogre::FrameListener, Ogre::LogListener {
                 bool  m_visible;
                 bool  m_update;
                 float m_height;
+                bool  m_newPrefix;
 
                 Ogre::String            m_prompt;
+                Ogre::String            m_prefix;
                 std::list<Ogre::String> m_lines;
                 unsigned int            m_lastLine;
                 unsigned int            m_startLine;
 
                 static const Ogre::String c_validChars;
                 static const unsigned int c_maxLines;
+
+                CommandManager m_commandManager;
 
                 QuakeConsole(QuakeConsole const&); // do not implement
                 QuakeConsole operator=(QuakeConsole const&); // do not implement
